@@ -29,12 +29,12 @@ echo "[test]"
 echo $tempPassword  $password
 
 # set password and remote access
-mysql --connect-expired-password -uroot -p'$tempPassword' -e"set global validate_password_policy=0;set global validate_password_length=1;ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';"
-mysql --connect-expired-password -uroot -p'$tempPassword' -e"GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$password' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+mysql --connect-expired-password -uroot -p"$tempPassword" -e"set global validate_password_policy=0;set global validate_password_length=1;ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';"
+mysql --connect-expired-password -uroot -p"$tempPassword" -e"GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$password' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 
 # startup mysql
 systemctl enable mysqld
 systemctl daemon-reload
 
 # restart mysql
-#service mysqld restart
+service mysqld restart
