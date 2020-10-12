@@ -7,8 +7,8 @@ fi
 password=$1
 
 ## download mysql yum package
-#wget http://repo.mysql.com/mysql57-community-release-el7-10.noarch.rpm
-#
+wget http://repo.mysql.com/mysql57-community-release-el7-10.noarch.rpm
+
 # install mysqll source
 rpm -Uvh mysql57-community-release-el7-10.noarch.rpm
 
@@ -28,12 +28,13 @@ rm -f temp_password.txt
 echo "[test]"
 echo $tempPassword  $password
 
+# set password and remote access
 mysql --connect-expired-password -uroot -p'$tempPassword' -e"set global validate_password_policy=0;set global validate_password_length=1;ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';"
 mysql --connect-expired-password -uroot -p'$tempPassword' -e"GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$password' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 
-#
-#systemctl enable mysqld
-#
-#systemctl daemon-reload
-#
+# startup mysql
+systemctl enable mysqld
+systemctl daemon-reload
+
+# restart mysql
 #service mysqld restart
