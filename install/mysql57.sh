@@ -25,7 +25,8 @@ systemctl status mysqld.service
 grep 'temporary password' /var/log/mysqld.log > temp_password.txt
 tempPassword=`awk -F'localhost: ' '{print $2}' temp_password.txt`
 rm -f temp_password.txt
-echo "[ password ]"  $tempPassword  $password
+echo "[test]"
+echo $tempPassword  $password
 
 # set password and remote access
 mysql --connect-expired-password -uroot -p"$tempPassword" -e"set global validate_password_policy=0;set global validate_password_length=1;ALTER USER 'root'@'localhost' IDENTIFIED BY '$password';"
